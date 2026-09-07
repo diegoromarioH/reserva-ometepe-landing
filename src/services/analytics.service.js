@@ -2,6 +2,17 @@ import { supabase, hasSupabase } from './supabaseClient';
 
 const PUBLIC_SITE_URL = import.meta.env.VITE_PUBLIC_SITE_URL || 'https://reservaometepe.com';
 const SESSION_KEY = 'ro_session_id';
+export const ANALYTICS_CONSENT_KEY = 'ro_analytics_consent';
+
+export function getAnalyticsConsent() {
+  try { return localStorage.getItem(ANALYTICS_CONSENT_KEY); } catch { return null; }
+}
+
+export function setAnalyticsConsent(value) {
+  try { localStorage.setItem(ANALYTICS_CONSENT_KEY, value); } catch { /* storage unavailable */ }
+  window.dispatchEvent(new CustomEvent('ro:analytics-consent', { detail: value }));
+  if (value === 'accepted') initExternalAnalytics();
+}
 
 function getSessionId() {
   try {
@@ -32,6 +43,7 @@ function safeParams(params = {}) {
 }
 
 export function initExternalAnalytics() {
+  if (getAnalyticsConsent() !== 'accepted') return;
   const ga = import.meta.env.VITE_GA4_ID;
   const pixel = import.meta.env.VITE_META_PIXEL_ID;
   const clarity = import.meta.env.VITE_CLARITY_ID;
@@ -64,6 +76,7 @@ export function initExternalAnalytics() {
 }
 
 export function sendToExternalAnalytics(name, params = {}) {
+  if (getAnalyticsConsent() !== 'accepted') return;
   if (window.gtag) window.gtag('event', name, params);
 
   if (window.fbq) {
