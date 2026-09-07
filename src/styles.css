@@ -171,6 +171,13 @@
 /* V24: el menú flotante no debe taparse con la barra fija de precio/CTA en ficha de hotel */
 body.ro-has-sticky-cta .mobile-island{bottom:86px}
 
+/* Privacidad, legales y consentimiento */
+.ro-cookie{position:fixed;z-index:100;left:20px;right:20px;bottom:20px;max-width:920px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 22px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 18px 60px rgba(0,0,0,.22);color:#1a1f2b}
+.ro-cookie b{font-size:1.05rem}.ro-cookie p{margin:6px 0;color:var(--muted);line-height:1.5}.ro-cookie small{color:var(--muted)}
+.ro-cookie-actions{display:flex;gap:10px;flex-shrink:0}.ro-cookie-link{border:0;background:transparent;color:inherit;text-align:left;padding:0;font:inherit;cursor:pointer;opacity:.86}.ro-cookie-link:hover{text-decoration:underline;opacity:1}
+.ro-legal .article section+section{margin-top:28px}.ro-legal .article h2{font-size:1.35rem;margin-bottom:8px}
+@media(max-width:720px){.ro-cookie{left:12px;right:12px;bottom:12px;align-items:stretch;flex-direction:column;gap:14px}.ro-cookie-actions{flex-direction:column-reverse}.ro-cookie-actions .btn{width:100%}}
+
 /* Metadatos de artículo del blog (autor, minutos de lectura) */
 .ro-post-meta{color:var(--muted);font-weight:800;text-transform:none;letter-spacing:0}
 
