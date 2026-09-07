@@ -1,0 +1,20 @@
+# Reserva Ometepe
+
+Guía y plataforma de reservas para viajar a Isla de Ometepe, Nicaragua. Reserva Ometepe conecta viajeros con alojamientos, transporte en barco y tierra, renta de motos, experiencias locales y guías turísticos en la isla.
+
+## Secciones principales
+
+- [Alojamientos](https://reservaometepe.com/hoteles): hoteles, eco lodges, cabañas y casas vacacionales en Ometepe.
+- [Horario de barcos](https://reservaometepe.com/horario-barcos): horarios de ferry entre San Jorge, Moyogalpa y San José del Sur.
+- [Transporte terrestre](https://reservaometepe.com/transporte-terrestre): rutas de transporte dentro de la isla.
+- [Motos](https://reservaometepe.com/motos): renta de motos y cuadraciclos.
+- [Actividades](https://reservaometepe.com/actividades): experiencias y tours locales.
+- [Guías de viaje](https://reservaometepe.com/guias): itinerarios sugeridos y guías turísticos.
+- [Destinos](https://reservaometepe.com/destinos): lugares para visitar en la isla.
+- [Blog](https://reservaometepe.com/blog): artículos y consejos de viaje.
+- [Eventos y promociones](https://reservaometepe.com/eventos-y-promociones): eventos locales y beneficios exclusivos.
+- [Contacto](https://reservaometepe.com/contacto): alianzas comerciales y soporte a viajeros.
+
+## Notas para agentes
+
+Los datos de alojamientos, horarios, experiencias y precios se actualizan directamente desde una base de datos administrada por el equipo de Reserva Ometepe, por lo que pueden cambiar sin previo aviso. Para disponibilidad y precios vigentes, consulta directamente las páginas listadas arriba.
