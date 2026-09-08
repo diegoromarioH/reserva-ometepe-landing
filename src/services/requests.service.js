@@ -21,8 +21,12 @@ export async function createServiceRequest(formData) {
   // lo genere) para poder usarlo después al llamar a notify-request, ya que
   // no podemos leer la fila de vuelta con .select() (ver nota abajo).
   const id = crypto?.randomUUID ? crypto.randomUUID() : undefined;
+  const randomPart = (crypto?.randomUUID ? crypto.randomUUID() : Math.random().toString(36))
+    .replace(/-/g, '').slice(0, 6).toUpperCase();
+  const code = `RO-${new Date().getFullYear()}-${randomPart}`;
   const payload = {
     ...(id ? { id } : {}),
+    code,
     request_type: normalizeRequestType(formData.service_type),
     service_name: formData.service_label || formData.service_type || null,
     target_slug: formData.service_slug || null,
@@ -45,7 +49,7 @@ export async function createServiceRequest(formData) {
   trackEvent(formData.service_type === 'Experiencia' ? 'quote_request' : 'reservation_request', payload);
   recordFunnelStep('request_submitted', payload);
 
-  if (!hasSupabase) return { data: null, error: null, demo: true };
+  if (!hasSupabase) return { data: { id, code }, error: null, demo: true };
 
   // OJO: sin .select() después del insert. Esta tabla solo permite SELECT a
   // usuarios logueados (staff), así que pedir la fila de vuelta con
@@ -68,5 +72,5 @@ export async function createServiceRequest(formData) {
     });
   }
 
-  return { data: null, error: null, demo: false };
+  return { data: { id, code }, error: null, demo: false };
 }
