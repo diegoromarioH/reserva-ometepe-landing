@@ -188,3 +188,7 @@ body.ro-has-sticky-cta .mobile-island{bottom:86px}
 .nav .guest-access:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .nav .guest-access svg{width:16px;height:16px;flex-shrink:0}
 @media(max-width:720px){.nav .guest-access{min-height:36px;padding:8px 10px;gap:6px;font-size:.75rem}.nav .guest-access svg{width:14px;height:14px}}
+
+/* Mobile header: keep guest access on one line without a white default button. */
+.nav .guest-access-short{display:none}
+@media(max-width:720px){.nav{gap:8px;padding:8px 10px}.nav .brand{min-width:0;gap:8px;flex:1}.nav .brand img{width:44px;height:44px;border-radius:13px;flex-shrink:0}.nav .brand b{font-size:.9rem}.nav .brand small{font-size:.72rem}.nav .guest-access{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:auto;max-width:90px;min-height:34px;padding:8px 11px;border:1px solid rgba(255,255,255,.5);border-radius:999px;background:rgba(255,255,255,.16);color:#fff;font-size:.78rem;font-weight:800;line-height:1;white-space:nowrap;box-shadow:none}.nav .guest-access-label{display:none}.nav .guest-access-short{display:inline}.nav .guest-access svg{width:14px;height:14px}}
