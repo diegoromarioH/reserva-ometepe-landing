@@ -574,6 +574,8 @@ function ReservePage({session,go}){
   const matchedMoto=defaults.type==='Moto'?DATA.motos.find(x=>x.slug===defaults.slug):null;
   const matchedExp=defaults.type==='Experiencia'?DATA.experiences.find(x=>x.slug===defaults.slug):null;
   const [step,setStep]=useState(0);
+  const [dish,setDish]=useState('');
+  const isGastronomy=defaults.slug==='cocina-nicaraguense';
   const [sent,setSent]=useState(false);
   const [sentCode,setSentCode]=useState('');
   const [accessSent,setAccessSent]=useState(false);
@@ -591,6 +593,7 @@ function ReservePage({session,go}){
       isMoto?`Días de renta: ${f.start_date&&f.end_date?Math.max(1,Math.round((new Date(f.end_date)-new Date(f.start_date))/864e5)):'-'}`:null,
       isMoto?`Cuenta con licencia de conducir: ${f.has_license?'Sí':'No confirmado'}`:null,
       isExp&&f.time_preference?`Horario preferido: ${f.time_preference}`:null,
+      isGastronomy&&dish?`Plato elegido: ${dish}`:null,
     ].filter(Boolean);
     const finalNotes=[f.notes,...extraLines].filter(Boolean).join(' | ');
     const payload={service_type:f.type,service_label:locked?defaults.label:(RESERVE_TYPES.find(t=>t.v===f.type)?.l||f.type),service_slug:defaults.slug||'',traveler_name:f.traveler_name,traveler_email:f.traveler_email,traveler_whatsapp:f.traveler_whatsapp,country:f.country,start_date:f.start_date,end_date:f.end_date,adults:f.adults,children:f.children,notes:finalNotes};
@@ -631,6 +634,7 @@ function ReservePage({session,go}){
           {!isMoto&&<div className="formrow"><label>Adultos<input required type="number" min="1" value={f.adults} onChange={e=>up('adults',e.target.value)}/></label><label>Niños<input type="number" min="0" value={f.children} onChange={e=>up('children',e.target.value)}/></label></div>}
           {isHotel&&matchedHotel&&matchedHotel.rooms&&matchedHotel.rooms.length>0&&<label className="ro-wizard-field">Habitación de tu interés (opcional)<select value={f.room_preference} onChange={e=>up('room_preference',e.target.value)}><option value="">Cualquiera / no estoy seguro</option>{matchedHotel.rooms.map(r=><option key={r.name} value={r.name}>{r.name} · hasta {r.capacity} personas</option>)}</select></label>}
           {isMoto&&<label className="ro-wizard-check"><input type="checkbox" checked={f.has_license} onChange={e=>up('has_license',e.target.checked)}/> Cuento con licencia de conducir válida</label>}
+          {isGastronomy&&<fieldset className="ro-dish-picker"><legend>Elige un plato para tu experiencia gastronómica</legend><p>Selecciona una opción para tu solicitud.</p>{['Indio Viejo','Vigorón','Sugerencia de temporada (plato sorpresa)'].map(option=><label key={option} className={'ro-dish-option'+(dish===option?' selected':'')}><input type="radio" name="gastronomy-dish" value={option} checked={dish===option} onChange={()=>setDish(option)}/><span>{option}</span></label>)}</fieldset>}
           {isExp&&<label className="ro-wizard-field">Horario preferido<select value={f.time_preference} onChange={e=>up('time_preference',e.target.value)}><option value="">Sin preferencia</option><option>Mañana</option><option>Tarde</option><option>Cualquier horario</option></select></label>}
         </div>}
         {step===2&&<div className="ro-wizard-step">
@@ -650,6 +654,7 @@ function ReservePage({session,go}){
             {isHotel&&f.room_preference&&<div><span>Habitación</span><b>{f.room_preference}</b></div>}
             {isMoto&&<div><span>Licencia</span><b>{f.has_license?'Confirmada':'No confirmada'}</b></div>}
             {isExp&&f.time_preference&&<div><span>Horario</span><b>{f.time_preference}</b></div>}
+            {isGastronomy&&<div><span>Plato elegido</span><b>{dish}</b></div>}
             <div><span>Nombre</span><b>{f.traveler_name}</b></div>
             <div><span>Correo</span><b>{f.traveler_email}</b></div>
             <div><span>WhatsApp</span><b>{f.traveler_whatsapp}</b></div>
@@ -661,14 +666,14 @@ function ReservePage({session,go}){
       </div>
       <div className="ro-wizard-nav">
         {step>0?<button type="button" className="btn ghost" onClick={()=>setStep(s=>s-1)}>Atrás</button>:<span/>}
-        {step<3?<button type="button" className="btn" disabled={!reserveStepValid(step,f)} onClick={()=>setStep(s=>s+1)}>Siguiente</button>:<button type="button" className="btn" disabled={sending} onClick={submit}>{sending?'Enviando…':(isExp?'Enviar solicitud de cotización':'Enviar solicitud')}</button>}
+        {step<3?<button type="button" className="btn" disabled={!reserveStepValid(step,f)||(step===1&&isGastronomy&&!dish)} onClick={()=>setStep(s=>s+1)}>Siguiente</button>:<button type="button" className="btn" disabled={sending} onClick={submit}>{sending?'Enviando…':(isExp?'Enviar solicitud de cotización':'Enviar solicitud')}</button>}
       </div>
     </div>
     <ReserveWizardStyle/>
   </section>;
 }
 function ReserveWizardStyle(){return <style>{`
-.ro-wizard{max-width:640px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:28px;border:1px solid #eef1f5}
+.ro-dish-picker{border:0;padding:0;margin:12px 0 16px;min-width:0}.ro-dish-picker legend{font-weight:800;font-size:14px;color:#173c33}.ro-dish-picker p{font-size:12px;color:#60716c;margin:5px 0 10px}.ro-wizard-step .ro-dish-option{display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;padding:12px 14px;margin:0 0 8px;border:1px solid #dce7e2;border-radius:12px;background:#fff;color:#173c33;cursor:pointer}.ro-wizard-step .ro-dish-option.selected{border-color:#06483e;background:#eff8f4}.ro-wizard-step .ro-dish-option input{width:18px;height:18px;margin:0;accent-color:#06483e;flex:none}.ro-wizard{max-width:640px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:28px;border:1px solid #eef1f5}
 .ro-wizard-progress{display:flex;justify-content:space-between;margin-bottom:28px;gap:6px}
 .ro-wizard-dot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;text-align:center}
 .ro-wizard-dot span{width:28px;height:28px;border-radius:50%;background:#eef1f5;color:#7a869a;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
