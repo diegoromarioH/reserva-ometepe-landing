@@ -204,3 +204,6 @@ body.ro-has-sticky-cta .mobile-island{bottom:86px}
 /* Only one guest-access label is visible at each breakpoint. */
 .nav > .guest-access .guest-access-short{display:none}
 @media(max-width:720px){.nav > .guest-access .guest-access-label{display:none}.nav > .guest-access .guest-access-short{display:inline}}
+
+/* Photos uploaded for a room appear on its accommodation detail card. */
+.roomgrid .room-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin:0 0 14px}
