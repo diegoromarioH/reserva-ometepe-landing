@@ -7,3 +7,7 @@
 .nav > .guest-access:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .nav > .guest-access svg{width:16px;height:16px;flex:none}
 @media(max-width:720px){.nav > .guest-access{min-height:36px;max-width:none;padding:8px 10px;font-size:.72rem}.nav > .guest-access svg{display:none}.nav > .guest-access .guest-access-label{display:none}.nav > .guest-access .guest-access-short{display:inline}}
+
+/* Only one guest-access label is visible at each breakpoint. */
+.nav > .guest-access .guest-access-short{display:none}
+@media(max-width:720px){.nav > .guest-access .guest-access-label{display:none}.nav > .guest-access .guest-access-short{display:inline}}
