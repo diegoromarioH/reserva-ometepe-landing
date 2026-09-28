@@ -29,6 +29,7 @@ function mapAccommodation(row, roomsByAcc, policyByAcc, primaryHostByAcc) {
     rating: row.rating ?? 0,
     reviews: row.review_count ?? 0,
     img: row.main_image_url || '',
+    images: row.main_image_url ? [row.main_image_url] : [],
     tags: (row.ideal_for && row.ideal_for.length ? row.ideal_for : row.amenities || []).slice(0, 4),
     amenities: row.amenities || [],
     views: row.views || [],
@@ -41,6 +42,7 @@ function mapAccommodation(row, roomsByAcc, policyByAcc, primaryHostByAcc) {
       beds: r.beds || '',
       price: r.price ?? row.price_from ?? 0,
       amenities: r.amenities || [],
+      img: r.main_image_url || '',
     })),
     policies: {
       reservation: policy?.reservation_policy || row.reservation_policy || 'Solicitud sujeta a confirmación del alojamiento.',
@@ -257,6 +259,7 @@ export async function fetchLiveGallery() {
       .select('*')
       .eq('active', true)
       .eq('media_type', 'image')
+      .eq('section', 'gallery')
       .order('sort_order', { ascending: true });
     if (error || !data || !data.length) return null;
     return data.map((row) => ({
